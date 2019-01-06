@@ -1,34 +1,43 @@
 
-// divs //
-let intro = document.getElementById("intro");
-let home = document.getElementById("home");
-let forest = document.getElementById("forest");
-let city = document.getElementById("city");
+let intro, home, forest, city,
 
-// text //
-let info = document.getElementById("info");
+    info,
 
-// buttons //
-let btnStart = document.getElementById("start");
-let btnHomeToForest = document.getElementById("home-to-forest");
-let btnHomeToCity = document.getElementById("home-to-city");
-let btnForestToHome = document.getElementById("forest-to-home");
-let btnCityToHome = document.getElementById("city-to-home");
+    btnStart, btnHomeToForest, btnHomeToCity,
+    btnForestToHome, btnCityToHome, btnSleep,
+    btnPickMushrooms, btnSellMushrooms;
 
-let btnSleep = document.getElementById("sleep");
-let btnPickMushrooms = document.getElementById("pick-mushrooms");
-let btnSellMushrooms = document.getElementById("sell-mushrooms");
+$(document).ready(function () {
 
-// $("#start").on("click", startGame);
+    // divs //
+    intro = $("#intro")[0];
+    home = $("#home")[0];
+    forest = $("#forest")[0];
+    city = $("#city")[0];
 
-btnStart.onclick = () => startGame();
-btnHomeToCity.onclick = () => game.goHomeToCity();
-btnHomeToForest.onclick = () => game.goHomeToForest();
-btnForestToHome.onclick = () => game.goForestToHome();
-btnCityToHome.onclick = () => game.goCityToHome();
-btnSleep.onclick = () => game.sleep();
-btnPickMushrooms.onclick = () => game.pickMushrooms();
-btnSellMushrooms.onclick = () => game.sellMushrooms();
+    // text //
+    info = $("#info")[0];
+
+    // buttons //
+    btnStart = $("#start")[0];
+    btnHomeToForest = $("#home-to-forest")[0];
+    btnHomeToCity = $("#home-to-city")[0];
+    btnForestToHome = $("#forest-to-home")[0];
+    btnCityToHome = $("#city-to-home")[0];
+
+    btnSleep = $("#sleep")[0];
+    btnPickMushrooms = $("#pick-mushrooms")[0];
+    btnSellMushrooms = $("#sell-mushrooms")[0];
+
+    btnStart.onclick = () => startGame();
+    btnHomeToCity.onclick = () => game.goHomeToCity();
+    btnHomeToForest.onclick = () => game.goHomeToForest();
+    btnForestToHome.onclick = () => game.goForestToHome();
+    btnCityToHome.onclick = () => game.goCityToHome();
+    btnSleep.onclick = () => game.sleep();
+    btnPickMushrooms.onclick = () => game.pickMushrooms();
+    btnSellMushrooms.onclick = () => game.sellMushrooms();
+});
 
 const game = {
     INTRO_TEXT : "Hello, you are just an old mushroomer. Your wife died in the last year. " +
@@ -41,55 +50,57 @@ const game = {
 
     sleep : function () {
         stats.updDay();
-        renderStats();
+        ui.renderStats();
     },
 
     pickMushrooms : function () {
-        stats.updMashrooms();
-        renderStats();
+        stats.updMushrooms();
+        ui.renderStats();
     },
 
     sellMushrooms : function () {
         stats.sellMushrooms();
-        renderStats();
+        ui.renderStats();
     },
 
     goHomeToCity : function () {
-        show(city);
-        hide(home);
+        ui.show(city);
+        ui.hide(home);
         stats.setPlace(game.CITY_TEXT);
-        renderStats();
+        ui.renderStats();
     },
     
     goHomeToForest : function () {
-        show(forest);
-        hide(home);
+        ui.show(forest);
+        ui.hide(home);
         stats.setPlace(game.FOREST_TEXT);
-        renderStats();
+        ui.renderStats();
     },
     
     goForestToHome : function () {
-        show(home);
-        hide(forest);
+        ui.show(home);
+        ui.hide(forest);
         stats.setPlace(game.HOME_TEXT);
-        renderStats();
+        ui.renderStats();
     },
     
     goCityToHome : function ( ) {
-        show(home);
-        hide(city);
+        ui.show(home);
+        ui.hide(city);
         stats.setPlace(game.HOME_TEXT);
-        renderStats();
+        ui.renderStats();
     }
 };
 
-let stats = {
-    mushrooms : 0,
+const stats = {
+
     day : 1,
+    mushrooms : 0,
     money : 0,
+    energy : 100,
     place : "",
 
-    updMashrooms: function () {
+    updMushrooms: function () {
         return this.mushrooms++;
     },
 
@@ -123,26 +134,31 @@ let stats = {
     }
 };
 
-function show(div) {
-    div.style.setProperty("visibility", "visible");
-    div.style.setProperty("display", "block");
-}
+const ui = {
+    
+    show : function (div) {
+        div.style.setProperty("visibility", "visible");
+        div.style.setProperty("display", "block");
+    },
+    
+    hide : function (div) {
+        div.style.setProperty("visibility", "hidden");
+        div.style.setProperty("display", "none");
+    },
 
-function hide(div) {
-    div.style.setProperty("visibility", "hidden");
-    div.style.setProperty("display", "none");
-}
-
-function renderStats() {
-    info.innerHTML = stats.place + "<br>" +
+    renderStats : function() {
+        info.innerHTML = stats.place + "<br>" +
         "day : " + stats.day + "<br>" +
         "mushrooms : " + stats.mushrooms + "<br>" +
-        "money : " + stats.money;
+        "money : " + stats.money + "<br>" +
+        "energy : " + stats.energy;
 }
 
+};
+
 function startGame() {
-    show(home);
+    ui.show(home);
     stats.setPlace(game.HOME_TEXT);
-    renderStats();
-    hide(btnStart);
+    ui.renderStats();
+    ui.hide(btnStart);
 }
