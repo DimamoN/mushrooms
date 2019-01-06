@@ -1,0 +1,23 @@
+* {
+    background-color: tan;
+}
+
+#intro {
+    visibility: visible;
+    position: fixed;
+}
+
+#home {
+    visibility: hidden;
+    margin-left: 140px;
+}
+
+#forest {
+    visibility: hidden;
+    margin-left: 140px;
+}
+
+#city {
+    visibility: hidden;
+    margin-left: 140px;
+}
