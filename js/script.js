@@ -34,7 +34,7 @@ $(document).ready(function () {
     btnSellMushrooms = $("#sell-mushrooms")[0];
     btnNtfOk = $("#ntf-ok")[0];
 
-    btnStart.onclick = () => startGame();
+    btnStart.onclick = () => game.startGame();
     btnHomeToCity.onclick = () => game.goHomeToCity();
     btnHomeToForest.onclick = () => game.goHomeToForest();
     btnForestToHome.onclick = () => game.goForestToHome();
@@ -55,13 +55,29 @@ const game = {
     FOREST_TEXT : "You are in the forest",
 
     NO_MUSHROOMS : "You have no mushrooms to sell",
-    NO_ENERGY_TEXT : "You are very tired",
+    NO_ENERGY_PICK_MUSHROOMS_TEXT : "You are very tired to pick mushrooms",
 
     NO_ENERGY_TRAVEL_TEXT : "You traveled tired. Your health has suffered",
 
+    startGame : function () {
+        ui.show(home);
+        stats.setPlace(game.HOME_TEXT);
+        ui.renderStats();
+        ui.hide(btnStart);
+    },
+
+    gameOver : function() {
+        ui.showNotification("You died! Money collected: " + stats.money);
+        window.setTimeout(function () {
+            window.location.reload();
+        },5000);
+    },
+
+    // actions //
+
     sleep : function () {
-        stats.updDay();
         stats.refreshEnergy();
+        stats.updDay();
         ui.renderStats();
     },
 
@@ -70,7 +86,7 @@ const game = {
             stats.updMushrooms();
             stats.minusEnergy();
         } else {
-            ui.showNotification(game.NO_ENERGY_TEXT);
+            ui.showNotification(game.NO_ENERGY_PICK_MUSHROOMS_TEXT);
         }
         ui.renderStats();
     },
@@ -84,10 +100,15 @@ const game = {
         ui.renderStats();
     },
 
+    // travel //
+
     travel : function (from, to, toText) {
         if (!stats.hasEnergy()) {
             ui.showNotification(game.NO_ENERGY_TRAVEL_TEXT);
             stats.minusHealth();
+            if (stats.health <= 0) {
+                this.gameOver();
+            }
         } else {
             stats.minusEnergy();
         }
@@ -119,7 +140,26 @@ const stats = {
     day : 1,
     mushrooms : 0,
     money : 0,
-    energy : 10,
+
+    energy : {
+
+        maxValueBasic : 10,
+        maxValue : 10,
+        value : 10,
+
+        setValue : function (value) {
+            this.value = value;
+        },
+
+        update : function () {
+            this.value = this.maxValueBasic;
+        },
+
+        minus : function () {
+            this.value--;
+        }
+    },
+
     health : 10,
     place : "",
 
@@ -128,11 +168,15 @@ const stats = {
     },
 
     hasEnergy: function () {
-        return this.energy > 0;
+        return this.energy.value > 0;
     },
 
     minusEnergy: function () {
-        this.energy--;
+        this.energy.minus();
+    },
+
+    refreshEnergy: function () {
+        this.energy.update();
     },
 
     minusHealth: function () {
@@ -144,17 +188,23 @@ const stats = {
         this.mushrooms = 0;
     },
 
-    refreshEnergy: function () {
-        this.energy = 10;
-    },
-
     updDay: function () {
         this.day++;
         
         switch (this.day) {
-            case 4 : ui.showNotification("Today you have a good mood"); break;
-            case 6 : ui.showNotification("It is rainy today, that's mean that tomorrow will be a lot of mushrooms"); break;
-            case 10 : ui.showNotification("You have heavy headache today, can't go to the forest"); break;
+            case 4 : {
+                ui.showNotification("Today you have a good mood. Your energy is increased");
+                stats.energy.maxValue = 15;
+                stats.energy.setValue(15);
+                ui.renderStats();
+            } break;
+            //case 6 : ui.showNotification("It is rainy today, that's mean that tomorrow will be a lot of mushrooms"); break;
+            case 10 : {
+                ui.showNotification("You have heavy headache today. Your energy is reduced");
+                stats.energy.maxValue = 5;
+                stats.energy.setValue(5);
+                ui.renderStats();
+            } break;
             case 40 : {
                 ui.showNotification("You get sick");
             } break;
@@ -162,8 +212,7 @@ const stats = {
                 ui.showNotification("You are getting very bad");
             } break;
             case 50 : {
-                ui.showNotification("You died");
-                window.location.reload();
+                game.gameOver();
             } break;
         }
     },
@@ -191,7 +240,7 @@ const ui = {
         "mushrooms : " + stats.mushrooms + "<br>" +
         "money : " + stats.money + "<br>" +
         "health: " + stats.health + "<br>" +
-        "energy : " + stats.energy;
+        "energy : " + stats.energy.value;
     },
 
     closeNotification : function () {
@@ -203,10 +252,3 @@ const ui = {
         this.show(notification);
     }
 };
-
-function startGame() {
-    ui.show(home);
-    stats.setPlace(game.HOME_TEXT);
-    ui.renderStats();
-    ui.hide(btnStart);
-}
