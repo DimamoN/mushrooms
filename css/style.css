@@ -8,16 +8,37 @@
 }
 
 #home {
+    display: none;
     visibility: hidden;
     margin-left: 140px;
 }
 
 #forest {
+    display: none;
     visibility: hidden;
     margin-left: 140px;
 }
 
 #city {
+    display: none;
     visibility: hidden;
     margin-left: 140px;
+}
+
+#notification {
+    visibility: hidden;
+    background-color: coral;
+    position: fixed;
+    bottom: 60%;
+    right: 45%;
+    margin-left: 300px;
+    max-width: 300px;
+    width: 350px;
+    height: 140px;
+}
+
+#ntf-ok, #ntf-text, #ntf-title {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background-color: coral;
 }
