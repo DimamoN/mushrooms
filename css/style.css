@@ -1,44 +1,67 @@
-* {
-    background-color: tan;
+body {
+    background: tan;
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    font-family: cursive;
+}
+
+#info-panel {
+    display: none;
+    background: antiquewhite;
+    padding: 5px;
+    font-family: cursive;
+}
+
+#scores {
+    float: right;
 }
 
 #intro {
-    visibility: visible;
-    position: fixed;
+    margin: 10% 30%;
+    font-family: cursive;
 }
 
-#home {
-    display: none;
-    visibility: hidden;
-    margin-left: 140px;
+.bottom-side {
+    display: flex;
+}
+.bottom-side div{
+    margin-left: 30%;
 }
 
-#forest {
-    display: none;
-    visibility: hidden;
-    margin-left: 140px;
+button#start {
+    float: right;
 }
 
+#home,
+#forest,
 #city {
     display: none;
-    visibility: hidden;
-    margin-left: 140px;
+    margin: 0 20%;
 }
 
 #notification {
-    visibility: hidden;
-    background-color: coral;
-    position: fixed;
-    bottom: 60%;
-    right: 45%;
-    margin-left: 300px;
-    max-width: 300px;
-    width: 350px;
-    height: 140px;
+    background: #b50f0f;
+    color: white;
+    display: none;
+    position: absolute;
+    font-family: cursive;
+    right: 0;
+    top: 29px;
+    width: 285px;
+    box-shadow: -3px 1px 11px #676565;
 }
 
-#ntf-ok, #ntf-text, #ntf-title {
+#ntf-ok,
+#ntf-text,
+#ntf-title {
     margin-left: 10px;
     margin-bottom: 10px;
-    background-color: coral;
+    /* background: coral;*/
+}
+
+img {
+    width: 630px;
 }

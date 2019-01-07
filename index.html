@@ -1,54 +1,59 @@
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel='stylesheet' href='css/style.css'/>
+    <link rel='stylesheet' href='css/style.css' />
     <title>Old mushroomer</title>
+    <link rel="shortcut icon" href="./res/favicon.png" type="image/png">
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </head>
+
 <body>
-
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-
-<div id="intro">
-    <p id="info">Hello, you are just an old mushroomer.
-        Your wife died in the last year. You have no kids. You are too old for job. <br>
-    The only thing, that gives you a sense to live is you favorite mushrooms.
-    So, why not to pick mushrooms now?</p>
-    <button id="start"> Start </button>
-</div>
-
-<div id="home">
-    <h3> Home </h3>
-    <img src="res/home.gif" width="30%" alt="home">
-    <button id="home-to-forest"> Go to forest </button>
-    <button id="home-to-city"> Go to city </button>
-    <button id="sleep"> Sleep </button>
-</div>
-
-<div id="forest">
-    <h3> Forest </h3>
-    <img src="res/forest.png" width="30%" alt="forest">
-    <button id="forest-to-home"> Go home </button>
-    <button id="pick-mushrooms"> Pick mushrooms </button>
-</div>
-
-<div id="city">
-    <h3> City </h3>
-    <img src="res/city.png" width="30%" alt="city">
-    <button id="city-to-home"> Go home </button>
-    <button id="sell-mushrooms"> Sell mushrooms </button>
-</div>
-
-<div id="notification">
-    <h3 id="ntf-title"> Notification </h3>
-    <p id="ntf-text"> </p>
-    <button id="ntf-ok"> OK </button>
-</div>
-
-<script src="js/script.js"></script>
+    <div id="info-panel"></div>
+    <div id="intro">
+        <p id="info"></p>
+        <button id="start">Start</button>
+    </div>
+    <div id="home">
+        <h3> Home </h3>
+        <img src="res/home.gif" alt="home">
+        <div class="bottom-side">
+            <div>
+                <button id="home-to-forest"> Go to forest </button>
+                <button id="home-to-city"> Go to city </button>
+                <button id="sleep"> Sleep </button>
+                <button id="eat-mushrooms" disabled>Eat mushrooms</button>
+            </div>
+        </div>
+    </div>
+    <div id="forest">
+        <h3> Forest </h3>
+        <img src="res/forest.png" alt="forest">
+        <div class="bottom-side">
+            <div>
+                <button id="forest-to-home"> Go home </button>
+                <button id="pick-mushrooms"> Pick mushrooms </button>
+            </div>
+        </div>
+    </div>
+    <div id="city">
+        <h3> City </h3>
+        <img src="res/city.png" alt="city">
+        <div class="bottom-side">
+            <div>
+                <button id="city-to-home"> Go home </button>
+                <button id="sell-mushrooms"> Sell mushrooms </button>
+            </div>
+        </div>
+    </div>
+    <div id="notification">
+        <h3 id="ntf-title"> Notification </h3>
+        <p id="ntf-text"> </p>
+        <button id="ntf-ok"> OK </button>
+    </div>
+    <script src="./js/main.js"></script>
 </body>
+
 </html>
